@@ -1,3 +1,25 @@
 {
-  "extends": "next/core-web-vitals"
+    "extends": "next/core-web-vitals",
+    "rules": {
+        "array-bracket-spacing": [ "error", "always" ],
+        "arrow-parens": [ "error", "always" ],
+        "arrow-spacing": [ "error", { "before": true, "after": true } ],
+        "block-spacing": [ "error", "always" ],
+        "brace-style": [ "error", "1tbs" ],
+        "comma-dangle": [ "error", "always-multiline" ],
+        "comma-spacing": [ "error", { "before": false, "after": true } ],
+        "eol-last": [ "error", "always" ],
+        "func-call-spacing": [ "error", "never" ],
+        "indent": [ "error", 4 ],
+        "jsx-quotes": [ "error", "prefer-double" ],
+        "max-len": [ "error", { "code": 120 } ],
+        "new-parens": [ "error", "always" ],
+        "no-trailing-spaces": [ "error" ],
+        "object-curly-spacing": [ "error", "always" ],
+        "one-var-declaration-per-line": [ "error", "always" ],
+        "operator-linebreak": [ "error" ],
+        "quotes": [ "error", "single" ],
+        "semi": [ "error", "never" ],
+        "template-curly-spacing": [ "error", "never" ]
+    }
 }
