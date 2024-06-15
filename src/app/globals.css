@@ -1,13 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-    --bg-color: #222;
-    --text-color: #ddd;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}
