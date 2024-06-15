@@ -3,6 +3,9 @@ import '../globals.css'
 
 export const metadata: Metadata = {
     title: 'YouTune',
+    icons: {
+        icon: '/YouTune_Icon.png',
+    },
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
