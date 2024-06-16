@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import YouTubePlayer from './YouTubePlayer'
+import TrackVideo from './TrackVideo'
 
 export default function Page() {
     const [ url, setUrl ] = React.useState('')
@@ -11,9 +11,8 @@ export default function Page() {
             <div className="md:w-80">
                 {/* Fixed sidebar on larger screens. */}
                 <div className="md:fixed md:w-80">
-                    {/* Video box. */}
                     <div className="h-36 flex justify-center">
-                        <YouTubePlayer url={ url } />
+                        <TrackVideo url={ url } />
                     </div>
 
                     {/* TODO */}
@@ -28,6 +27,7 @@ export default function Page() {
             </div>
         </div>
 
+        {/* DEBUG */}
         <button onClick={ () => setUrl('https://www.youtube.com/watch?v=aTawJ5Bd36M') }
             className="mt-64">Click me UwU</button>
     </>
