@@ -1,7 +1,7 @@
 import './globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
+    return <>
         <html lang="en">
             <head>
                 <meta charSet="utf-8" />
@@ -11,5 +11,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 { children }
             </body>
         </html>
-    )
+    </>
 }
