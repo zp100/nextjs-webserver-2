@@ -2,15 +2,15 @@
 import React from 'react'
 import ReactPlayer from 'react-player'
 import Image from 'next/image'
-import youtunePlaceholder from './YouTune_placeholder.png'
+import youtunePlaceholder from '../_assets/YouTune_placeholder.png'
 
-export default function TrackVideo({ url }: { url?: string }) {
+export default function TrackVideo({ url }: { url?: string }): React.ReactNode {
     // Detect if this is on the client.
-    const [ isClient, setIsClient ] = React.useState(false)
-    React.useEffect(() => setIsClient(true), [])
+    const [ is_client, set_is_client ] = React.useState<boolean>(false)
+    React.useEffect(() => set_is_client(true), [])
 
     // Only load the embed if on the client, to prevent hydration errors.
-    if (isClient && url !== undefined) {
+    if (is_client && url !== undefined) {
         return <>
             <ReactPlayer
                 url={ url }
