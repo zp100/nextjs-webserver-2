@@ -1,21 +1,49 @@
+import { QueryResultRow, sql } from '@vercel/postgres'
 import Track from './Track'
 
-export default function TrackList(): React.ReactNode {
-    const tracks = [ 'track 1', 'track 2', 'track 3' ]
-
-    const track_list: React.ReactNode[] = []
-    for (let i = 0; i < tracks.length; i++) {
-        track_list.push(<Track
-            key={ i }
-            list_index={ i + 1 }
-            name={ tracks[i] }
-            tag_list={ [] }
-        />)
-    }
+export default async function TrackList({ owner }: {
+    owner: string
+}): Promise<React.AwaitedReactNode> {
+    const { rows } = await sql`
+        select *
+        from youtune_tracks
+        where owner = ${owner};
+    `
+    const track_list: YoutuneTracksRow[] = rows
+        .map((row: QueryResultRow) => row as YoutuneTracksRow)
+        .toSorted((a: YoutuneTracksRow, b: YoutuneTracksRow) => a.index - b.index)
 
     return <>
-        <div className="flex flex-col gap-4">
-            { track_list }
+        <div className="flex-1 p-4 rounded-lg bg-neutral-900">
+            {/* Message. */}
+            <span>
+                Tracks in mix: <b className="text-white">{track_list.length}</b>
+            </span>
+            <hr className="my-4 border-neutral-400" />
+
+            {/* Track list. */}
+            <div className="flex flex-col gap-y-1">
+                {track_list.map((track) => <Track
+                    key={track.track_id}
+                    list_index={track.index}
+                    name={track.title}
+                    tag_list={track.tags.split(',').map((tag: string) => tag.trim())}
+                />)}
+            </div>
         </div>
     </>
+}
+
+interface YoutuneTracksRow {
+    track_id: string;
+    owner: string;
+    index: number;
+    title: string;
+    tags: string;
+    url: string;
+    volume: string;
+    start_time: string;
+    fade_in_sec: string;
+    fade_out_sec: string;
+    end_time: string;
 }
