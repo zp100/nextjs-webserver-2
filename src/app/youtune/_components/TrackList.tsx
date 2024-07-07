@@ -1,9 +1,9 @@
 'use client'
-import { YoutuneTracksRow } from '../page'
+import { YoutuneTrack } from '../page'
 import Track from './Track'
 
 export default function TrackList({ list, cur_track_id, track_click_callback }: {
-    list: YoutuneTracksRow[],
+    list: YoutuneTrack[],
     cur_track_id?: string,
     track_click_callback?: (_track_id: string) => void,
 }): React.ReactNode {
@@ -17,7 +17,7 @@ export default function TrackList({ list, cur_track_id, track_click_callback }: 
 
             {/* Track list. */}
             <div className="flex flex-col gap-y-1">
-                {list.map((track: YoutuneTracksRow) => <Track
+                {list.map((track: YoutuneTrack) => <Track
                     key={track.track_id}
                     list_index={track.index}
                     name={track.title}

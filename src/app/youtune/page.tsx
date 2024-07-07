@@ -10,15 +10,15 @@ export default async function Page(): Promise<React.AwaitedReactNode> {
         where owner = ${owner};
     `
     const track_list = rows
-        .map((row: QueryResultRow) => row as YoutuneTracksRow)
-        .toSorted((a: YoutuneTracksRow, b: YoutuneTracksRow) => a.index - b.index)
+        .map((row: QueryResultRow) => row as YoutuneTrack)
+        .toSorted((a: YoutuneTrack, b: YoutuneTrack) => a.index - b.index)
 
     return <>
         <Client track_list={track_list} />
     </>
 }
 
-export interface YoutuneTracksRow {
+export interface YoutuneTrack {
     track_id: string;
     owner: string;
     index: number;
