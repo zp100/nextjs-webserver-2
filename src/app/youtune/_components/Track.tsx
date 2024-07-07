@@ -1,3 +1,4 @@
+'use client'
 import MiniButton from './MiniButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
@@ -5,7 +6,7 @@ import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 export default function Track({ list_index, name, tag_list }: {
     list_index: number,
     name: string,
-    tag_list: string[]
+    tag_list: string[],
 }): React.ReactNode {
     return <>
         <div className="flex gap-x-1">

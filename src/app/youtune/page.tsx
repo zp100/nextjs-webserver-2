@@ -1,7 +1,19 @@
-import TrackVideo from './_components/TrackVideo'
+import { QueryResultRow, sql } from '@vercel/postgres'
+import React from 'react'
 import TrackList from './_components/TrackList'
+import TrackVideo from './_components/TrackVideo'
 
-export default function Page(): React.ReactNode {
+export default async function Page(): Promise<React.AwaitedReactNode> {
+    const owner = 'Zach'
+    const { rows } = await sql`
+        select *
+        from youtune_tracks
+        where owner = ${owner};
+    `
+    const track_list = rows
+        .map((row: QueryResultRow) => row as YoutuneTracksRow)
+        .toSorted((a: YoutuneTracksRow, b: YoutuneTracksRow) => a.index - b.index)
+
     return <>
         <div className="p-4 flex flex-col gap-y-4 md:p-8 md:flex-row md:gap-x-4">
             {/* Video options. */}
@@ -18,8 +30,22 @@ export default function Page(): React.ReactNode {
 
             {/* Track list. */}
             <div className="flex-1">
-                <TrackList owner="Zach" />
+                <TrackList list={track_list} />
             </div>
         </div>
     </>
+}
+
+export interface YoutuneTracksRow {
+    track_id: string;
+    owner: string;
+    index: number;
+    title: string;
+    tags: string;
+    url: string;
+    volume: string;
+    start_time: string;
+    fade_in_sec: string;
+    fade_out_sec: string;
+    end_time: string;
 }
