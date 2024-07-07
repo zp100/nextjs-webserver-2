@@ -1,4 +1,6 @@
 import MiniButton from './MiniButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 export default function Track({ list_index, name, tag_list }: {
     list_index: number,
@@ -24,10 +26,10 @@ export default function Track({ list_index, name, tag_list }: {
             {/* Track min buttons. */}
             <div className="flex flex-col flex-nowrap">
                 <MiniButton>
-                    ☰
+                    <FontAwesomeIcon icon={faBars} />
                 </MiniButton>
                 <MiniButton>
-                    ✏️
+                    <FontAwesomeIcon icon={faPenToSquare} />
                 </MiniButton>
             </div>
         </div>
