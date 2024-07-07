@@ -1,7 +1,6 @@
 import { QueryResultRow, sql } from '@vercel/postgres'
 import React from 'react'
-import TrackList from './_components/TrackList'
-import TrackVideo from './_components/TrackVideo'
+import Client from './_components/Client'
 
 export default async function Page(): Promise<React.AwaitedReactNode> {
     const owner = 'Zach'
@@ -15,24 +14,7 @@ export default async function Page(): Promise<React.AwaitedReactNode> {
         .toSorted((a: YoutuneTracksRow, b: YoutuneTracksRow) => a.index - b.index)
 
     return <>
-        <div className="p-4 flex flex-col gap-y-4 md:p-8 md:flex-row md:gap-x-4">
-            {/* Video options. */}
-            <div className="flex flex-col gap-y-4 md:sticky md:top-0 md:-my-8 md:py-8 md:w-80 md:h-screen
-                md:overflow-y-hidden">
-                {/* Track video (or placeholder). */}
-                <TrackVideo />
-
-                {/* TODO */}
-                <div className="md:h-full md:overflow-y-auto">
-                    Options
-                </div>
-            </div>
-
-            {/* Track list. */}
-            <div className="flex-1">
-                <TrackList list={track_list} />
-            </div>
-        </div>
+        <Client track_list={track_list} />
     </>
 }
 

@@ -1,10 +1,11 @@
 'use client'
-import { QueryResultRow, sql } from '@vercel/postgres'
 import { YoutuneTracksRow } from '../page'
 import Track from './Track'
 
-export default function TrackList({ list }: {
+export default function TrackList({ list, cur_track_id, track_click_callback }: {
     list: YoutuneTracksRow[],
+    cur_track_id?: string,
+    track_click_callback?: (_track_id: string) => any,
 }): React.ReactNode {
     return <>
         <div className="p-4 rounded-lg bg-neutral-900">
@@ -21,6 +22,8 @@ export default function TrackList({ list }: {
                     list_index={track.index}
                     name={track.title}
                     tag_list={track.tags.split(',').map((tag: string) => tag.trim())}
+                    is_selected={track.track_id === cur_track_id}
+                    click_callback={() => track_click_callback?.(track.track_id)}
                 />)}
             </div>
         </div>

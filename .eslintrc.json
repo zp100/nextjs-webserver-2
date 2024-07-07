@@ -15,6 +15,8 @@
         "max-len": [ "error", { "code": 120 } ],
         "new-parens": [ "error", "always" ],
         "no-trailing-spaces": [ "error" ],
+        "no-unused-vars": [ "error", { "argsIgnorePattern": "^_" } ],
+        "no-unused-expressions": [ "error" ],
         "object-curly-spacing": [ "error", "always" ],
         "one-var-declaration-per-line": [ "error", "always" ],
         "operator-linebreak": [ "error" ],
