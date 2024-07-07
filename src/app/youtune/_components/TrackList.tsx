@@ -5,7 +5,7 @@ import Track from './Track'
 export default function TrackList({ list, cur_track_id, track_click_callback }: {
     list: YoutuneTracksRow[],
     cur_track_id?: string,
-    track_click_callback?: (_track_id: string) => any,
+    track_click_callback?: (_track_id: string) => void,
 }): React.ReactNode {
     return <>
         <div className="p-4 rounded-lg bg-neutral-900">
