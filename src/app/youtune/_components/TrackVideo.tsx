@@ -1,22 +1,17 @@
 'use client'
+import Image from 'next/image'
 import React from 'react'
 import ReactPlayer from 'react-player'
-import Image from 'next/image'
 import youtunePlaceholder from '../_assets/YouTune_placeholder.png'
 
 export default function TrackVideo({ url }: {
     url?: string
 }): React.ReactNode {
-    // Detect if this is on the client.
-    const [ is_client, set_is_client ] = React.useState<boolean>(false)
-    React.useEffect(() => set_is_client(true), [])
-
     return <>
         <div className="h-36 flex justify-center">
-            {/* Only load the embed if on the client, to prevent hydration errors. */}
-            {(is_client && url !== undefined) ? <>
+            {(url !== undefined) ? <>
                 <ReactPlayer
-                    url={ url }
+                    url={ parse_url(url) }
                     width="100%"
                     height="100%"
                     controls
@@ -31,4 +26,15 @@ export default function TrackVideo({ url }: {
             </>}
         </div>
     </>
+}
+
+function parse_url(url: string) {
+    const video_id = url
+        .split('/')                 // split based on URL path
+        .at(-1)                     // get last item (query params)
+        ?.replace('watch?v=', '')   // remove "watch" part, if needed
+        .split(/[?&]/)              // split based on query params
+        .at(0)                      // get first item (video ID)
+
+    return `https://www.youtube.com/watch?v=${video_id}`
 }

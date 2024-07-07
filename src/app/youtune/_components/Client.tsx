@@ -15,7 +15,9 @@ export default function Client({ track_list }: {
             <div className="flex flex-col gap-y-4 md:sticky md:top-0 md:-my-8 md:py-8 md:w-80 md:h-screen
                 md:overflow-y-hidden">
                 {/* Track video (or placeholder). */}
-                <TrackVideo />
+                <TrackVideo
+                    url={track_list.find((track: YoutuneTracksRow) => track.track_id === cur_track_id)?.url}
+                />
 
                 {/* TODO */}
                 <div className="md:h-full md:overflow-y-auto">
