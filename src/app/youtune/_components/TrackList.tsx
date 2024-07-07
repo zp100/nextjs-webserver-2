@@ -9,12 +9,12 @@ export default async function TrackList({ owner }: {
         from youtune_tracks
         where owner = ${owner};
     `
-    const track_list: YoutuneTracksRow[] = rows
+    const track_list = rows
         .map((row: QueryResultRow) => row as YoutuneTracksRow)
         .toSorted((a: YoutuneTracksRow, b: YoutuneTracksRow) => a.index - b.index)
 
     return <>
-        <div className="flex-1 p-4 rounded-lg bg-neutral-900">
+        <div className="p-4 rounded-lg bg-neutral-900">
             {/* Message. */}
             <span>
                 Tracks in mix: <b className="text-white">{track_list.length}</b>
@@ -23,7 +23,7 @@ export default async function TrackList({ owner }: {
 
             {/* Track list. */}
             <div className="flex flex-col gap-y-1">
-                {track_list.map((track) => <Track
+                {track_list.map((track: YoutuneTracksRow) => <Track
                     key={track.track_id}
                     list_index={track.index}
                     name={track.title}

@@ -8,23 +8,24 @@ export default function Track({ list_index, name, tag_list }: {
     tag_list: string[]
 }): React.ReactNode {
     return <>
-        <div className="flex flex-nowrap">
+        <div className="flex gap-x-1">
             {/* Main track button. */}
-            <button className="flex-1 flex flex-nowrap items-center gap-x-3
-            rounded-lg bg-transparent hover:bg-neutral-800">
+            <button className="flex-1 p-1 flex items-center gap-x-2 rounded-lg hover:bg-neutral-800">
                 <div className="text-white text-lg text-right min-w-10">
                     {list_index}.
                 </div>
-                <div className="text-white text-lg">
-                    {name}
+                <div className="flex-1 flex flex-wrap items-center gap-x-2">
+                    <span className="text-white text-lg text-left">
+                        {name}
+                    </span>
+                    {tag_list.map((tag: string) => <span key={tag} className="rounded-md px-2 py-1 bg-neutral-700">
+                        {tag}
+                    </span>)}
                 </div>
-                {tag_list.map((tag: string) => <div key={tag} className="rounded-md px-2 py-1 bg-neutral-700">
-                    {tag}
-                </div>)}
             </button>
 
-            {/* Track min buttons. */}
-            <div className="flex flex-col flex-nowrap">
+            {/* Track mini buttons. */}
+            <div className="self-center flex flex-col">
                 <MiniButton>
                     <FontAwesomeIcon icon={faBars} />
                 </MiniButton>
