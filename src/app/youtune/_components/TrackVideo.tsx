@@ -11,14 +11,36 @@ const DEFAULT_VOLUME = 0.5
 export default function TrackVideo({ track }: {
     track?: YoutuneTrack
 }): React.ReactNode {
+    const [ video_volume, set_video_volume ] = React.useState<number>(DEFAULT_VOLUME)
     const player_ref = React.useRef<ReactPlayer>(null)
 
     let video: React.ReactNode
     if (track !== undefined) {
         const url = parse_url(track.url)
-        const volume = parse_volume(track.volume) ?? DEFAULT_VOLUME
-        const start_sec = parse_time(track.start_time)
-        const end_sec = parse_time(track.end_time)
+        const volume = parse_volume(track.volume)
+        const start_time = parse_time(track.start_time)
+        const fade_in_sec = parse_time(track.fade_in_sec)
+        const fade_out_sec = parse_time(track.fade_out_sec)
+        const end_time = parse_time(track.end_time)
+
+        const updateFadeVolume = (): void => {
+            if (!player_ref.current) {
+                return
+            }
+            const player = player_ref.current
+
+            const base_volume = volume ?? DEFAULT_VOLUME
+            const min_time = start_time ?? 0
+            const max_time = end_time ?? player.getDuration()
+            const current_time = player.getCurrentTime()
+            if (fade_in_sec !== undefined && current_time < min_time + fade_in_sec) {
+                set_video_volume(base_volume * ((current_time - min_time) / fade_in_sec))
+            } else if (fade_out_sec !== undefined && current_time > max_time - fade_out_sec) {
+                set_video_volume(base_volume * ((max_time - current_time) / fade_out_sec))
+            } else if (video_volume !== base_volume) {
+                set_video_volume(base_volume)
+            }
+        }
 
         video = <>
             <ReactPlayer
@@ -27,17 +49,16 @@ export default function TrackVideo({ track }: {
                 width="100%"
                 height="100%"
                 progressInterval={100}
-                volume={volume}
+                volume={video_volume}
                 config={{
                     playerVars: {
-                        start: start_sec,
-                        end: end_sec,
+                        start: start_time,
+                        end: end_time,
                     },
                 }}
                 controls
                 playing
-                onReady={() => ready_callback(player_ref, track)}
-                onProgress={() => progress_callback(player_ref, track)}
+                onProgress={() => updateFadeVolume()}
             />
         </>
     } else {
@@ -55,14 +76,6 @@ export default function TrackVideo({ track }: {
             {video}
         </div>
     </>
-}
-
-function ready_callback(player_ref: React.RefObject<ReactPlayer>, track: YoutuneTrack): void {
-
-}
-
-function progress_callback(player_ref: React.RefObject<ReactPlayer>, track: YoutuneTrack): void {
-
 }
 
 function parse_url(url: string): string {
