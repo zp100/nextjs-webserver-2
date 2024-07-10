@@ -5,7 +5,7 @@ import Track from './Track'
 export default function TrackList({ list, cur_track_id, track_click_callback }: {
     list: YoutuneTrack[],
     cur_track_id?: string,
-    track_click_callback?: (_track_id: string) => void,
+    track_click_callback?: (_track: YoutuneTrack) => void,
 }): React.ReactNode {
     return <>
         <div className="p-4 rounded-lg bg-neutral-900">
@@ -23,7 +23,7 @@ export default function TrackList({ list, cur_track_id, track_click_callback }: 
                     name={track.title}
                     tag_list={track.tags.split(',').map((tag: string) => tag.trim())}
                     is_selected={track.track_id === cur_track_id}
-                    click_callback={() => track_click_callback?.(track.track_id)}
+                    click_callback={() => track_click_callback?.(track)}
                 />)}
             </div>
         </div>
