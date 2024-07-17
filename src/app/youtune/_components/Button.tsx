@@ -1,5 +1,3 @@
-'use client'
-
 export default function Button({ click, children }: {
     click?: () => void,
     children: React.ReactNode,

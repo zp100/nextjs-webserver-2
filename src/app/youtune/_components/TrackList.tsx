@@ -1,4 +1,3 @@
-'use client'
 import { YoutuneTrack } from '../page'
 import Track from './Track'
 

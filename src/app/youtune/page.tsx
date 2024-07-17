@@ -1,5 +1,4 @@
 import { QueryResultRow, sql } from '@vercel/postgres'
-import React from 'react'
 import Client from './_components/Client'
 
 // Disable SQL data caching.

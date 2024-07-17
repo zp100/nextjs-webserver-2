@@ -1,4 +1,3 @@
-'use client'
 import MiniButton from './MiniButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
