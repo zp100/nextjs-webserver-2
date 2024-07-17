@@ -24,7 +24,8 @@ export default function Track({ list_index, name, tag_list, is_selected, click_c
                     </span>
                     {tag_list.map((tag: string) => <span
                         key={tag}
-                        className={`rounded-md px-2 py-1 bg-neutral-700 ${is_selected ? 'bg-red-600' : ''}`}
+                        className={`rounded-md px-2 py-1 bg-neutral-800
+                            ${is_selected ? 'text-red-300 bg-red-600' : ''}`}
                     >
                         {tag}
                     </span>)}

@@ -2,14 +2,19 @@ import { QueryResultRow, sql } from '@vercel/postgres'
 import React from 'react'
 import Client from './_components/Client'
 
+// Disable SQL data caching.
+export const revalidate = 0
+
 export default async function Page(): Promise<React.AwaitedReactNode> {
+    // DEBUG
     const user = 'Zach'
-    const { rows } = await sql`
+
+    const query_result = await sql`
         select *
         from youtune_tracks
         where owner = ${user};
     `
-    const track_list = rows
+    const track_list = query_result.rows
         .map((row: QueryResultRow) => row as YoutuneTrack)
         .toSorted((a: YoutuneTrack, b: YoutuneTrack) => a.index - b.index)
 
