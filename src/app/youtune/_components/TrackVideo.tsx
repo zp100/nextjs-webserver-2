@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import { useRef, useState } from 'react'
 import ReactPlayer from 'react-player/youtube'
 import youtunePlaceholder from '../_assets/YouTune_placeholder.png'
 import { YoutuneTrack } from '../page'
@@ -10,8 +10,8 @@ const DEFAULT_VOLUME = 0.5
 export default function TrackVideo({ track }: {
     track?: YoutuneTrack
 }): React.ReactNode {
-    const [ video_volume, set_video_volume ] = React.useState<number>(DEFAULT_VOLUME)
-    const player_ref = React.useRef<ReactPlayer>(null)
+    const [ video_volume, set_video_volume ] = useState<number>(DEFAULT_VOLUME)
+    const player_ref = useRef<ReactPlayer>(null)
 
     let video: React.ReactNode
     if (track !== undefined) {
