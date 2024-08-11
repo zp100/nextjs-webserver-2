@@ -12,13 +12,15 @@ export default function Client({ user, default_volume, track_list }: {
 }): React.ReactNode {
     const [ render, set_render ] = useState<boolean>(false)
     const [ cur_track_id, set_cur_track_id ] = useState<string>()
+    const [ duration_time, set_duration_time ] = useState<number>(NaN)
+    const [ elapsed_time, set_elapsed_time ] = useState<number>(NaN)
     const cur_track = track_list.find((track: YoutuneTrack) => track.track_id === cur_track_id)
 
     let tab_title = 'YouTune'
-    if (user && user !== '') {
+    if (user !== undefined && user !== '') {
         tab_title = `${user}'s tracks | ` + tab_title
     }
-    if (cur_track) {
+    if (cur_track !== undefined) {
         tab_title = `${cur_track.title} | ` + tab_title
     }
 
@@ -38,10 +40,26 @@ export default function Client({ user, default_volume, track_list }: {
                     key={render ? 1 : 0}
                     default_volume={default_volume}
                     track={cur_track}
+                    videoTime={(dt: number, et: number) => {
+                        set_duration_time(dt)
+                        set_elapsed_time(et)
+                    }}
                 />
 
                 {/* TODO */}
                 <div className="md:h-full md:overflow-y-auto">
+                    <div className="flex gap-x-2 justify-between text-white">
+                        <div
+                            className="whitespace-nowrap overflow-x-hidden text-ellipsis"
+                            title={cur_track !== undefined ? `${cur_track.title} (${cur_track.tags})` : ''}
+                        >
+                            {cur_track?.title ?? <i>No track selected</i>}
+                        </div>
+                        <div className="whitespace-nowrap">
+                            {`${get_time_string(elapsed_time)} / ${get_time_string(duration_time)} / ${get_time_string(
+                                duration_time - elapsed_time)}`}
+                        </div>
+                    </div>
                     <Button click={() => set_render(!render)}>
                         Reload
                     </Button>
@@ -58,4 +76,18 @@ export default function Client({ user, default_volume, track_list }: {
             </div>
         </div>
     </>
+}
+
+function get_time_string(time_sec: number): string {
+    if (Number.isNaN(time_sec)) {
+        return '–:––'
+    }
+
+    const minutes = Math.floor(time_sec / 60)
+    const seconds = Math.floor(time_sec) % 60
+
+    return (seconds < 10
+        ? `${minutes}:0${seconds}`
+        : `${minutes}:${seconds}`
+    )
 }

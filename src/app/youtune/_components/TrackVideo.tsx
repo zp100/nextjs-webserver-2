@@ -4,9 +4,10 @@ import ReactPlayer from 'react-player/youtube'
 import youtunePlaceholder from '../_assets/YouTune_placeholder.png'
 import { YoutuneTrack } from '../page'
 
-export default function TrackVideo({ default_volume, track }: {
+export default function TrackVideo({ default_volume, track, videoTime }: {
     default_volume: number,
     track?: YoutuneTrack,
+    videoTime?: (_duration_time: number, _elapsed_time: number) => void,
 }): React.ReactNode {
     const [ video_volume, set_video_volume ] = useState<number>(default_volume)
     const player_ref = useRef<ReactPlayer>(null)
@@ -20,16 +21,17 @@ export default function TrackVideo({ default_volume, track }: {
         const fade_out_sec = parse_time(track.fade_out_sec)
         const end_time = parse_time(track.end_time)
 
-        const updateFadeVolume = (): void => {
+        const onVideoProgress = (): void => {
             if (!player_ref.current) {
                 return
             }
             const player = player_ref.current
 
             const base_volume = volume ?? default_volume
+            const current_time = player.getCurrentTime()
             const min_time = start_time ?? 0
             const max_time = end_time ?? player.getDuration()
-            const current_time = player.getCurrentTime()
+
             if (fade_in_sec !== undefined && current_time < min_time + fade_in_sec) {
                 set_video_volume(base_volume * ((current_time - min_time) / fade_in_sec))
             } else if (fade_out_sec !== undefined && current_time > max_time - fade_out_sec) {
@@ -37,6 +39,11 @@ export default function TrackVideo({ default_volume, track }: {
             } else if (video_volume !== base_volume) {
                 set_video_volume(base_volume)
             }
+
+            videoTime?.(
+                Math.floor(max_time - min_time),
+                Math.floor(current_time - min_time),
+            )
         }
 
         video = <>
@@ -55,7 +62,7 @@ export default function TrackVideo({ default_volume, track }: {
                 }}
                 controls
                 playing
-                onProgress={() => updateFadeVolume()}
+                onProgress={() => onVideoProgress()}
             />
         </>
     } else {
