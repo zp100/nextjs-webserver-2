@@ -4,7 +4,9 @@ export default function Button({ click, children }: {
 }): React.ReactNode {
     return <>
         <button
-            className="border-2 border-neutral-700 rounded-md bg-neutral-800 hover:bg-neutral-700"
+            className="w-full
+                bg-neutral-800 border-2 border-neutral-700 rounded-md
+                hover:bg-neutral-700 active:border-red-800 active:bg-red-800 focus:bg-neutral-700"
             onClick={click}
         >
             {children}
