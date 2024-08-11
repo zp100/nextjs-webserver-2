@@ -4,13 +4,11 @@ import ReactPlayer from 'react-player/youtube'
 import youtunePlaceholder from '../_assets/YouTune_placeholder.png'
 import { YoutuneTrack } from '../page'
 
-// DEBUG
-const DEFAULT_VOLUME = 0.5
-
-export default function TrackVideo({ track }: {
-    track?: YoutuneTrack
+export default function TrackVideo({ default_volume, track }: {
+    default_volume: number,
+    track?: YoutuneTrack,
 }): React.ReactNode {
-    const [ video_volume, set_video_volume ] = useState<number>(DEFAULT_VOLUME)
+    const [ video_volume, set_video_volume ] = useState<number>(default_volume)
     const player_ref = useRef<ReactPlayer>(null)
 
     let video: React.ReactNode
@@ -28,7 +26,7 @@ export default function TrackVideo({ track }: {
             }
             const player = player_ref.current
 
-            const base_volume = volume ?? DEFAULT_VOLUME
+            const base_volume = volume ?? default_volume
             const min_time = start_time ?? 0
             const max_time = end_time ?? player.getDuration()
             const current_time = player.getCurrentTime()
@@ -48,7 +46,7 @@ export default function TrackVideo({ track }: {
                 width="100%"
                 height="100%"
                 progressInterval={100}
-                volume={video_volume}
+                volume={video_volume / 100}
                 config={{
                     playerVars: {
                         start: start_time,
@@ -93,7 +91,7 @@ function parse_volume(volume_string: string): number | undefined {
         return undefined
     }
 
-    const volume = Number(volume_string) / 100
+    const volume = Number(volume_string)
     if (Number.isNaN(volume)) {
         return undefined
     }

@@ -8,18 +8,26 @@ export default async function Page(): Promise<React.AwaitedReactNode> {
     // DEBUG
     const user = 'Zach'
 
-    const query_result = await sql`
+    const query_default_volume = await sql`
+        select default_volume
+        from youtune_users
+        where username = ${user};
+    `
+    const default_volume = Number(query_default_volume.rows[0]['default_volume'])
+
+    const query_tracks = await sql`
         select *
         from youtune_tracks
         where owner = ${user};
     `
-    const track_list = query_result.rows
+    const track_list = query_tracks.rows
         .map((row: QueryResultRow) => row as YoutuneTrack)
         .toSorted((a: YoutuneTrack, b: YoutuneTrack) => a.index - b.index)
 
     return <>
         <Client
             user={user}
+            default_volume={default_volume}
             track_list={track_list}
         />
     </>
