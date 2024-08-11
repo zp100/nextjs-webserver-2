@@ -1,4 +1,5 @@
-import { parse_tags, YoutuneTrack } from '../page'
+import { YoutuneTrack } from '../page'
+import { parse_tags } from '../utils'
 import Track from './Track'
 
 export default function TrackList({ list, cur_track_id, track_click_callback }: {
