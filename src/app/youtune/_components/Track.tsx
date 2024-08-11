@@ -1,6 +1,5 @@
 import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import MiniButton from './MiniButton'
+import Button from './Button'
 
 export default function Track({ list_index, name, tag_list, is_selected, click_callback }: {
     list_index: number,
@@ -36,12 +35,8 @@ export default function Track({ list_index, name, tag_list, is_selected, click_c
 
             {/* Track mini buttons. */}
             <div className="self-center flex flex-col">
-                <MiniButton>
-                    <FontAwesomeIcon icon={faBars} />
-                </MiniButton>
-                <MiniButton>
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                </MiniButton>
+                <Button mini icon={faBars} />
+                <Button mini icon={faPenToSquare} />
             </div>
         </div>
     </>

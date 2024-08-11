@@ -1,7 +1,9 @@
 'use client'
+import { faForwardFast, faRotate } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { YoutuneTrack } from '../page'
 import Button from './Button'
+import Options from './Options'
 import TrackList from './TrackList'
 import TrackVideo from './TrackVideo'
 
@@ -30,7 +32,7 @@ export default function Client({ user, default_volume, track_list }: {
         </title>
 
         <div className="p-4 flex flex-col gap-y-4 md:p-8 md:flex-row md:gap-x-4">
-            {/* Video options. */}
+            {/* Video. */}
             <div
                 className="flex flex-col gap-y-4 md:sticky md:top-0 md:-my-8 md:py-8 md:w-80 md:h-screen
                     md:overflow-y-hidden"
@@ -46,8 +48,8 @@ export default function Client({ user, default_volume, track_list }: {
                     }}
                 />
 
-                {/* TODO */}
-                <div className="md:h-full md:overflow-y-auto">
+                {/* Video info. */}
+                <div className="flex flex-col gap-y-1">
                     <div className="flex gap-x-2 justify-between text-white">
                         <div
                             className="whitespace-nowrap overflow-x-hidden text-ellipsis"
@@ -56,14 +58,20 @@ export default function Client({ user, default_volume, track_list }: {
                             {cur_track?.title ?? <i>No track selected</i>}
                         </div>
                         <div className="whitespace-nowrap">
-                            {`${get_time_string(elapsed_time)} / ${get_time_string(duration_time)} / ${get_time_string(
-                                duration_time - elapsed_time)}`}
+                            {`${get_time_string(elapsed_time)} / ${get_time_string(duration_time)} / ${
+                                get_time_string(duration_time - elapsed_time)}`}
                         </div>
                     </div>
-                    <Button click={() => set_render(!render)}>
+                    <Button icon={faRotate} click={() => set_render(!render)}>
                         Reload
                     </Button>
+                    <Button icon={faForwardFast} click={() => null /* TODO */}>
+                        Skip
+                    </Button>
                 </div>
+
+                {/* Options. */}
+                <Options />
             </div>
 
             {/* Track list. */}
