@@ -1,6 +1,6 @@
-import MiniButton from './MiniButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import MiniButton from './MiniButton'
 
 export default function Track({ list_index, name, tag_list, is_selected, click_callback }: {
     list_index: number,

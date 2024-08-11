@@ -1,4 +1,4 @@
-import { YoutuneTrack } from '../page'
+import { parse_tags, YoutuneTrack } from '../page'
 import Track from './Track'
 
 export default function TrackList({ list, cur_track_id, track_click_callback }: {
@@ -20,7 +20,7 @@ export default function TrackList({ list, cur_track_id, track_click_callback }: 
                     key={track.track_id}
                     list_index={track.index}
                     name={track.title}
-                    tag_list={track.tags.split(',').map((tag: string) => tag.trim())}
+                    tag_list={parse_tags(track.tags)}
                     is_selected={track.track_id === cur_track_id}
                     click_callback={() => track_click_callback?.(track)}
                 />)}
